@@ -1,21 +1,20 @@
 package com.thoughtworks.springbootemployee.Mapper;
 
-import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeDto;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.beans.BeanUtils;
 
 public class EmployeeMapper {
 
-    public static Employee map(EmployeeRequest employeeRequest) {
+    public static Employee convertDtoToEntity(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequest,employee);
+        BeanUtils.copyProperties(employeeDto,employee);
         return employee;
     }
 
-    public static EmployeeResponse map(Employee employee) {
-        EmployeeResponse employeeResponse = new EmployeeResponse();
-        BeanUtils.copyProperties(employee,employeeResponse);
-        return employeeResponse;
+    public static EmployeeDto convertEntityToDto(Employee employee) {
+        EmployeeDto employeeDto = new EmployeeDto();
+        BeanUtils.copyProperties(employee,employeeDto);
+        return employeeDto;
     }
 }

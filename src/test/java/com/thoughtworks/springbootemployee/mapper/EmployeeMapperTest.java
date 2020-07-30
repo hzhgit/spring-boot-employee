@@ -1,8 +1,7 @@
 package com.thoughtworks.springbootemployee.mapper;
 
 import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
-import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeDto;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.junit.jupiter.api.Test;
 
@@ -12,15 +11,15 @@ public class EmployeeMapperTest {
     @Test
     void should_return_employee_when_mapper_given_employee_request() {
         //given
-        EmployeeRequest employeeRequest = new EmployeeRequest(1,"zach",18,"male",1000,1);;
+        EmployeeDto employeeDto = new EmployeeDto(1,"zach",18,"male",1000,1);;
         //when
-        Employee employee = EmployeeMapper.map(employeeRequest);
+        Employee employee = EmployeeMapper.convertDtoToEntity(employeeDto);
         //then
-        assertEquals(employee.getId(),employeeRequest.getId());
-        assertEquals(employee.getAge(), employeeRequest.getAge());
-        assertEquals(employee.getName(), employeeRequest.getName());
-        assertEquals(employee.getGender(), employeeRequest.getGender());
-        assertEquals(employee.getCompanyId(), employeeRequest.getCompanyId());
+        assertEquals(employee.getId(), employeeDto.getId());
+        assertEquals(employee.getAge(), employeeDto.getAge());
+        assertEquals(employee.getName(), employeeDto.getName());
+        assertEquals(employee.getGender(), employeeDto.getGender());
+        assertEquals(employee.getCompanyId(), employeeDto.getCompanyId());
     }
 
     @Test
@@ -28,12 +27,12 @@ public class EmployeeMapperTest {
         //given
         Employee employee = new Employee(1,"zach",18,"male",1000,1);
         //when
-        EmployeeResponse employeeResponse = EmployeeMapper.map(employee);
+        EmployeeDto employeeDto = EmployeeMapper.convertEntityToDto(employee);
         //then
-        assertEquals(employee.getId(),employeeResponse.getId());
-        assertEquals(employee.getAge(), employeeResponse.getAge());
-        assertEquals(employee.getName(), employeeResponse.getName());
-        assertEquals(employee.getGender(), employeeResponse.getGender());
-        assertEquals(employee.getCompanyId(), employeeResponse.getCompanyId());
+        assertEquals(employee.getId(),employeeDto.getId());
+        assertEquals(employee.getAge(), employeeDto.getAge());
+        assertEquals(employee.getName(), employeeDto.getName());
+        assertEquals(employee.getGender(), employeeDto.getGender());
+        assertEquals(employee.getCompanyId(), employeeDto.getCompanyId());
     }
 }
