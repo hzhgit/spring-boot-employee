@@ -14,6 +14,8 @@ public class EmployeeMapper {
     }
 
     public static EmployeeResponse map(Employee employee) {
-        return null;
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        BeanUtils.copyProperties(employee,employeeResponse);
+        return employeeResponse;
     }
 }
