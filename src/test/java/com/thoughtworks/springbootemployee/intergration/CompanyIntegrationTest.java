@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -118,6 +117,32 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.companyName").value("blibli"))
+                .andExpect(jsonPath("$.employeesNumber").value(1));
+    }
+
+    @Test
+    void should_return_company_when_hit_update_company_endpoint_given_new_company() throws Exception {
+        //given
+        initCompany();
+        String comanyInfo = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"companyName\": \"TW\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"age\": 20,\n" +
+                "            \"name\": \"hzh\",\n" +
+                "            \"gender\": \"male\",\n" +
+                "            \"salary\": 2000.0\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"employeesNumber\": 1\n" +
+                "}";
+        //then
+        mockMvc.perform(put("/companies/1").contentType(MediaType.APPLICATION_JSON).content(comanyInfo))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.companyName").value("TW"))
                 .andExpect(jsonPath("$.employeesNumber").value(1));
     }
 }
