@@ -145,4 +145,20 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value("TW"))
                 .andExpect(jsonPath("$.employeesNumber").value(1));
     }
+
+    @Test
+    void should_delete_company_when_hit_delete_company_endpoint_given_id() throws Exception {
+        //given
+        initCompany();
+
+        //then
+        mockMvc.perform(delete("/companies/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.employees[0].id").isNumber())
+                .andExpect(jsonPath("$.employees[0].name").value("zach"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("male"))
+                .andExpect(jsonPath("$.employees[0].salary").value(1000))
+                .andExpect(jsonPath("$.employees[0].companyId").value(1));
+    }
 }
