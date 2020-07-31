@@ -76,7 +76,7 @@ public class CompanyServiceTest {
         //given
         int page = 1;
         int pageSize = 1;
-        given(companyRepository.findAll(PageRequest.of(page, pageSize))).willReturn(Page.empty());
+        given(companyRepository.findAll(PageRequest.of(page - 1, pageSize))).willReturn(Page.empty());
 
         //when
         Page<Company> companies = companyService.getCompaniesByPage(page, pageSize);

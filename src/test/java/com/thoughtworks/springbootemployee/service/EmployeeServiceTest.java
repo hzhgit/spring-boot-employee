@@ -108,7 +108,7 @@ public class EmployeeServiceTest {
         //given
         int page = 1;
         int pageSize = 5;
-        given(employeeRepository.findAll(PageRequest.of(page, pageSize))).willReturn(Page.empty());
+        given(employeeRepository.findAll(PageRequest.of(page - 1, pageSize))).willReturn(Page.empty());
 
         //when
         Page<Employee> employees = service.getEmployeesByPage(page, pageSize);
