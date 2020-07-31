@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,5 +93,31 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.employees[0].gender").value("male"))
                 .andExpect(jsonPath("$.employees[0].salary").value(1000))
                 .andExpect(jsonPath("$.employees[0].companyId").value(1));
+    }
+
+    @Test
+    void should_return_company_when_hit_add_company_endpoint_given_company() throws Exception {
+        //given
+        initCompany();
+        String comanyInfo = "{\n" +
+                "    \"id\": 2,\n" +
+                "    \"companyName\": \"blibli\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"age\": 18,\n" +
+                "            \"name\": \"zach\",\n" +
+                "            \"gender\": \"male\",\n" +
+                "            \"salary\": 1000.0\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"employeesNumber\": 1\n" +
+                "}";
+        //then
+        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(comanyInfo))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.companyName").value("blibli"))
+                .andExpect(jsonPath("$.employeesNumber").value(1));
     }
 }
