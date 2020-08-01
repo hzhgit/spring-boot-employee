@@ -1,6 +1,0 @@
-2020-07-30 10:31:52 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COMPANYID" not found; SQL statement:
-SELECT * FROM COMPANYID [42102-200]
-2020-07-30 10:31:56 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ID[*]"; expected "INSERT"; SQL statement:
-ID [42001-200]

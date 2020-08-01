@@ -1,12 +1,15 @@
+server:
+  port: 8087
 spring:
   datasource:
-#    url: jdbc:h2:file:./h2/testdb
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   h2:
     console:
       enabled: true
+  flyway:
+    location:classpath: db/migration

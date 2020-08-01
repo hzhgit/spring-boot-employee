@@ -15,7 +15,8 @@ import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,11 +31,12 @@ public class EmployeeIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
+    //@BeforeEach
     private void initCompanyAndEmployee() {
         Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        companyRepository.save(company);
+        Company company1=companyRepository.save(company);;
         Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
+        employee.setCompanyId(company1.getId());
         employeeRepository.save(employee);
     }
 
@@ -84,7 +86,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees?gender=" + gender))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].gender").value(gender));
-
+                // todo list??
     }
 
     @Test
@@ -96,7 +98,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees?id=" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
-        //then
+        //todo ?????
     }
 
     @Test
