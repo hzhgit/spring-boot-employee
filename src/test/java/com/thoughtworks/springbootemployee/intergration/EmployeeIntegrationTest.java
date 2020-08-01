@@ -145,9 +145,10 @@ public class EmployeeIntegrationTest {
     @Test
     void should_update_employee_when_hit_update_employee_given_new_employee() throws Exception {
         //given
+        employeeRepository.saveAll(testEmployees);
         String newEmployee = "{\n" +
                 "                \"id\": 1,\n" +
-                "                \"name\": \"Zach\",\n" +
+                "                \"name\": \"hzh\",\n" +
                 "                \"age\": 23,\n" +
                 "                \"gender\": \"female\",\n" +
                 "                \"salary\": 3000,\n" +
@@ -157,7 +158,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(put("/employees/1").contentType(MediaType.APPLICATION_JSON).content(newEmployee))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("Zach"))
+                .andExpect(jsonPath("$.name").value("hzh"))
                 .andExpect(jsonPath("$.age").value(23))
                 .andExpect(jsonPath("$.gender").value("female"))
                 .andExpect(jsonPath("$.salary").value(3000))
