@@ -66,8 +66,8 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies?page=" + page + "&pageSize=" + pageSize))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(pageSize)))
-                .andExpect(jsonPath("$.totalPages").value(3))
-                .andExpect(jsonPath("$.totalElements").value(3));
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
     }
 
     @Test
