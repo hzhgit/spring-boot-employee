@@ -82,4 +82,20 @@ public class customExceptionTest {
         //then
         assertEquals(NotSuchDataException.class, exception.getClass());
     }
+
+    @Test
+    void should_return_illegal_operation_exception_when_update_company_given_id_not_equals_updated_employee_id() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        int id = 1;
+        Company company = new Company(2,"OOCL",0,null);
+
+        //when
+        Throwable exception = assertThrows(IllegalOperationException.class,
+                () -> companyService.updateCompany(1, company));
+
+        //then
+        assertEquals(IllegalOperationException.class,exception.getClass());
+    }
 }
