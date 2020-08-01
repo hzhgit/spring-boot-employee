@@ -50,6 +50,6 @@ public class NotSuchDataExceptionTest {
                 () -> employeeService.updateEmployee(1, employee));
 
         //then
-        assertEquals(IllegalOperationException.class,exception);
+        assertEquals(IllegalOperationException.class,exception.getClass());
     }
 }

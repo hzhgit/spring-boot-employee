@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -68,7 +69,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NotSuchDataException {
+    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NotSuchDataException, IllegalOperationException {
         //given
         int employeeId = 1;
         Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200);
