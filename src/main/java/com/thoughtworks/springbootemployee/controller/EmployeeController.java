@@ -46,7 +46,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) {
+    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) throws NotSuchDataException {
         return service.updateEmployee(employeeId, modifiedEmployee);
     }
 
