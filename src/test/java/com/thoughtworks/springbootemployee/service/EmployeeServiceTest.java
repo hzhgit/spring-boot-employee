@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -32,7 +33,7 @@ public class EmployeeServiceTest {
         )));
 
         //when
-        List<Employee> employees = service.getAll();
+        List<EmployeeResponse> employees = service.getAll();
 
         //then
         assertNotNull(employees);
@@ -47,7 +48,7 @@ public class EmployeeServiceTest {
                 .willReturn(Optional.of(new Employee(1, "Quentin", 18, "male", 10000)));
 
         //when
-        Employee employee = service.getEmployeeById(id);
+        EmployeeResponse employee = service.getEmployeeById(id);
 
         //then
         assertNotNull(employee);
@@ -61,11 +62,10 @@ public class EmployeeServiceTest {
         given(employeeRepository.save(employee)).willReturn(employee);
 
         //when
-        Employee addedEmployee = service.addEmployee(employee);
+        EmployeeResponse addedEmployee = service.addEmployee(employee);
 
         //then
         assertNotNull(addedEmployee);
-        assertEquals(employee, addedEmployee);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.save(employee)).willReturn(employee);
 
         //when
-        Employee updatedEmployee = service.updateEmployee(employeeId, employee);
+        EmployeeResponse updatedEmployee = service.updateEmployee(employeeId, employee);
 
         //then
         assertNotNull(updatedEmployee);
@@ -96,7 +96,7 @@ public class EmployeeServiceTest {
                 Optional.of(new Employee(1, "Quentin", 18, "male", 10000)));
 
         //when
-        Employee employee = service.deleteEmployee(id);
+        EmployeeResponse employee = service.deleteEmployee(id);
 
         //then
         assertNotNull(employee);
@@ -129,7 +129,7 @@ public class EmployeeServiceTest {
                 new Employee(5, "Quentin", 18, "male", 10000)
         ));
         //when
-        List<Employee> employees = service.getEmployeesByGender(gender);
+        List<EmployeeResponse> employees = service.getEmployeesByGender(gender);
 
         //then
         assertNotNull(employees);

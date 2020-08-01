@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,19 +22,28 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeResponse> getAll() {
+        List<EmployeeResponse> employeeResponses = new ArrayList<>();
+        List<Employee> employees = employeeRepository.findAll();
+        for(Employee employee: employees){
+            employeeResponses.add(EmployeeMapper.convertEntityToEmployeeResponse(employee));
+        }
+        return employeeResponses;
     }
 
-    public Employee getEmployeeById(Integer id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeResponse getEmployeeById(Integer id) {
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        return employeeResponse = EmployeeMapper.convertEntityToEmployeeResponse(employee);
     }
 
-    public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeResponse addEmployee(Employee employee) {
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        Employee returnEmployee = employeeRepository.save(employee);
+        return employeeResponse =  EmployeeMapper.convertEntityToEmployeeResponse(returnEmployee);
     }
 
-    public Employee updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException, IllegalOperationException {
+    public EmployeeResponse updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException, IllegalOperationException {
         if(employee.getId() != employeeId){
             throw new IllegalOperationException();
         }
@@ -46,24 +58,29 @@ public class EmployeeService {
         }else {
             throw new NotSuchDataException();
         }
-        return updatedEmployee;
+        return EmployeeMapper.convertEntityToEmployeeResponse(updatedEmployee);
     }
 
-    public Employee deleteEmployee(Integer id) throws NotSuchDataException {
+    public EmployeeResponse deleteEmployee(Integer id) throws NotSuchDataException {
         Employee deletedEmployee = employeeRepository.findById(id).orElse(null);
         if (deletedEmployee != null) {
             employeeRepository.delete(deletedEmployee);
         }else {
             throw new NotSuchDataException();
         }
-        return deletedEmployee;
+        return EmployeeMapper.convertEntityToEmployeeResponse(deletedEmployee);
     }
 
     public Page<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
         return employeeRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
-    public List<Employee> getEmployeesByGender(String gender) {
-        return employeeRepository.findByGender(gender);
+    public List<EmployeeResponse> getEmployeesByGender(String gender) {
+        List<EmployeeResponse> employeeResponses = new ArrayList<>();
+        List<Employee> employees =employeeRepository.findByGender(gender);
+        for(Employee employee : employees){
+            employeeResponses.add(EmployeeMapper.convertEntityToEmployeeResponse(employee));
+        }
+        return employeeResponses;
     }
 }
