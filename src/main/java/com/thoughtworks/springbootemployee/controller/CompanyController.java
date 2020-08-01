@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
+import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -47,13 +47,13 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) {
+    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) throws NotSuchDataException {
         return service.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company deleteCompanyById(@PathVariable Integer companyId) throws IllegalOperationException {
+    public Company deleteCompanyById(@PathVariable Integer companyId) throws NotSuchDataException {
         return service.deleteCompanyById(companyId);
     }
 

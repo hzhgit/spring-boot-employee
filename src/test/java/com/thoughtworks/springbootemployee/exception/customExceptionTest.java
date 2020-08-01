@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.exception;
 
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -61,10 +62,24 @@ public class customExceptionTest {
         CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
         //when
-        Throwable exception = assertThrows(IllegalOperationException.class,
+        Throwable exception = assertThrows(NotSuchDataException.class,
                 () -> companyService.deleteCompanyById(1));
 
         //then
-        assertEquals(IllegalOperationException.class, exception.getClass());
+        assertEquals(NotSuchDataException.class, exception.getClass());
+    }
+
+    @Test
+    void should_return_not_such_data_when_updat_company_given_id_not_exists() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        Company company = new Company();
+        company.setId(1);
+        //when
+        Throwable exception = assertThrows(NotSuchDataException.class,
+                () -> companyService.updateCompany(1, company));
+        //then
+        assertEquals(NotSuchDataException.class, exception.getClass());
     }
 }
