@@ -106,12 +106,18 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_hit_get_employee_by_id_given_id() throws Exception {
         //given
-        int id = 1;
+        Employee employee = employeeRepository.save(testEmployees.get(0));
+
         //when
-        mockMvc.perform(get("/employees?id=" + id))
+        mockMvc.perform(get("/employees?id=" + employee.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-        //todo ?????
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].name").value(employee.getName()))
+                .andExpect(jsonPath("$[0].age").value(employee.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(employee.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(employee.getSalary()))
+                .andExpect(jsonPath("$[0].companyId").value(employee.getCompanyId()));
     }
 
     @Test
