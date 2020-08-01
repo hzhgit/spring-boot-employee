@@ -168,14 +168,15 @@ public class EmployeeIntegrationTest {
     @Test
     void should_delete_employee_when_hit_delete_employee_endpoint_given_id() throws Exception {
         //given
+         employeeRepository.saveAll(testEmployees);
         //when
         mockMvc.perform(delete("/employees/1"))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("ShaoLi"))
-                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.name").value("zach"))
+                .andExpect(jsonPath("$.age").value(21))
                 .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(500))
+                .andExpect(jsonPath("$.salary").value(5000))
                 .andExpect(jsonPath("$.companyId").value(1));
     }
 }
