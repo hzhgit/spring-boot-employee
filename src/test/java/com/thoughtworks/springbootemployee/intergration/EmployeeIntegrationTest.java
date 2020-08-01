@@ -78,19 +78,16 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_hit_get_employee_by_page_endpoint_given_page_and_page_size() throws Exception {
         //given
+        employeeRepository.saveAll(testEmployees);
         int page = 1;
-        int pageSize = 1;
+        int pageSize = 3;
 
         //when
         mockMvc.perform(get("/employees?page=" + page + "&pageSize=" + pageSize))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].id").isNumber())
-                .andExpect(jsonPath("$.content[0].name").value("ShaoLi"))
-                .andExpect(jsonPath("$.content[0].age").value(22))
-                .andExpect(jsonPath("$.content[0].gender").value("male"))
-                .andExpect(jsonPath("$.content[0].salary").value(500))
-                .andExpect(jsonPath("$.content[0].companyId").value(1));
+                .andExpect(jsonPath("$.content",hasSize(pageSize)))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(6));
     }
 
     @Test
