@@ -1,1 +1,1 @@
-alter table employee add CONSTRAINT fk_company_employees foreign key(company_id) references company(id)
+-- ALTER TABLE `employee` ADD FOREIGN KEY(company_id) REFERENCES `company`(id);

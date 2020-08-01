@@ -145,36 +145,37 @@ public class EmployeeIntegrationTest {
     @Test
     void should_update_employee_when_hit_update_employee_given_new_employee() throws Exception {
         //given
-        employeeRepository.saveAll(testEmployees);
+        Employee Employee = employeeRepository.save(new Employee(1, "zach", 22, "female", 500, 1));
         String newEmployee = "{\n" +
-                "                \"id\": 1,\n" +
+                "                \"id\": " + Employee.getId() + ",\n" +
                 "                \"name\": \"hzh\",\n" +
-                "                \"age\": 23,\n" +
-                "                \"gender\": \"female\",\n" +
-                "                \"salary\": 3000,\n" +
+                "                \"age\": 18,\n" +
+                "                \"gender\": \"male\",\n" +
+                "                \"salary\": 6000,\n" +
                 "                \"companyId\": 1\n" +
                 "            }";
         //when
-        mockMvc.perform(put("/employees/1").contentType(MediaType.APPLICATION_JSON).content(newEmployee))
+        mockMvc.perform(put("/employees/" + Employee.getId()).contentType(MediaType.APPLICATION_JSON).content(newEmployee))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("hzh"))
-                .andExpect(jsonPath("$.age").value(23))
-                .andExpect(jsonPath("$.gender").value("female"))
-                .andExpect(jsonPath("$.salary").value(3000))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(6000))
                 .andExpect(jsonPath("$.companyId").value(1));
     }
 
     @Test
     void should_delete_employee_when_hit_delete_employee_endpoint_given_id() throws Exception {
         //given
-         employeeRepository.saveAll(testEmployees);
+        Employee employee = employeeRepository.save(new Employee(
+                1,"zach", 22, "male", 5000, 1));
         //when
-        mockMvc.perform(delete("/employees/1"))
+        mockMvc.perform(delete("/employees/" + employee.getId()))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("zach"))
-                .andExpect(jsonPath("$.age").value(21))
+                .andExpect(jsonPath("$.age").value(22))
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(5000))
                 .andExpect(jsonPath("$.companyId").value(1));
