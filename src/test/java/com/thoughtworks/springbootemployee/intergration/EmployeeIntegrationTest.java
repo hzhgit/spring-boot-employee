@@ -28,10 +28,8 @@ public class EmployeeIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private EmployeeRepository employeeRepository;
-
     @Autowired
     private CompanyRepository companyRepository;
 
@@ -93,13 +91,16 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_hit_get_employee_by_gender_endpoint_given_gender() throws Exception {
         //given
+        employeeRepository.saveAll(testEmployees);
         String gender = "male";
 
         //when
         mockMvc.perform(get("/employees?gender=" + gender))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].gender").value(gender));
-        // todo list??
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[1].gender").value("male"))
+                .andExpect(jsonPath("$[2].gender").value("male"))
+                .andExpect(jsonPath("$[3].gender").value("male"));
     }
 
     @Test
