@@ -1,9 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAll() {
+    public List<CompanyResponse> getAll() {
         return service.getAll();
     }
 
@@ -32,29 +33,29 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompanyByCompanyId(@PathVariable Integer companyId) {
+    public CompanyResponse getCompanyByCompanyId(@PathVariable Integer companyId) {
         return service.getCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer companyId) {
+    public List<EmployeeResponse> getAllEmployeesByCompanyId(@PathVariable Integer companyId) {
         return service.getEmployeesByCompanyId(companyId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company company) {
+    public CompanyResponse addCompany(@RequestBody Company company) {
         return service.addCompany(company);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) throws NotSuchDataException, IllegalOperationException {
+    public CompanyResponse updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) throws NotSuchDataException, IllegalOperationException {
         return service.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company deleteCompanyById(@PathVariable Integer companyId) throws NotSuchDataException {
+    public CompanyResponse deleteCompanyById(@PathVariable Integer companyId) throws NotSuchDataException {
         return service.deleteCompanyById(companyId);
     }
 

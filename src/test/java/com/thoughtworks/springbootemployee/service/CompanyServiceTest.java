@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
@@ -43,7 +45,7 @@ public class CompanyServiceTest {
         ));
 
         //when
-        List<Company> companies = companyService.getAll();
+        List<CompanyResponse> companies = companyService.getAll();
         //then
         assertNotNull(companies);
         assertEquals(2, companies.size());
@@ -66,7 +68,7 @@ public class CompanyServiceTest {
         );
 
         //when
-        Company company = companyService.getCompanyById(id);
+        CompanyResponse company = companyService.getCompanyById(id);
         //then
         assertNotNull(company);
         assertEquals(id, company.getId());
@@ -102,7 +104,7 @@ public class CompanyServiceTest {
         );
 
         //when
-        List<Employee> employees = companyService.getEmployeesByCompanyId(companyId);
+        List<EmployeeResponse> employees = companyService.getEmployeesByCompanyId(companyId);
         //then
         assertNotNull(employees);
         assertEquals(6, employees.size());
@@ -122,7 +124,7 @@ public class CompanyServiceTest {
         given(companyRepository.save(company)).willReturn(company);
 
         //when
-        Company addedCompany = companyService.addCompany(company);
+        CompanyResponse addedCompany = companyService.addCompany(company);
         //then
         assertNotNull(addedCompany);
         assertEquals(company.getId(), addedCompany.getId());
@@ -144,7 +146,7 @@ public class CompanyServiceTest {
         given(companyRepository.save(company)).willReturn(company);
 
         //when
-        Company updatedCompany = companyService.updateCompany(companyId, company);
+        CompanyResponse updatedCompany = companyService.updateCompany(companyId, company);
         //then
         assertNotNull(updatedCompany);
         assertEquals(company.getId(), updatedCompany.getId());
@@ -168,7 +170,7 @@ public class CompanyServiceTest {
         given(companyRepository.findById(companyId)).willReturn(Optional.of(company));
 
         //when
-        Company deletedCompany = companyService.deleteCompanyById(companyId);
+        CompanyResponse deletedCompany = companyService.deleteCompanyById(companyId);
         //then
         assertNotNull(deletedCompany);
         assertEquals(company.getId(), deletedCompany.getId());
