@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -52,7 +53,7 @@ public class CompanyController {
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company deleteCompanyById(@PathVariable Integer companyId) {
+    public Company deleteCompanyById(@PathVariable Integer companyId) throws IllegalOperationException {
         return service.deleteCompanyById(companyId);
     }
 

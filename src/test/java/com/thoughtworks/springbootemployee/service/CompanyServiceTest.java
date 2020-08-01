@@ -1,9 +1,9 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -153,7 +153,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_deleted_company_when_delete_company_given_company_id_is_1() {
+    void should_return_deleted_company_when_delete_company_given_company_id_is_1() throws IllegalOperationException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(

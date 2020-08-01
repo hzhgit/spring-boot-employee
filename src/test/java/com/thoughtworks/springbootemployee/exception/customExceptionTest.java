@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.exception;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
-public class NotSuchDataExceptionTest {
+public class customExceptionTest {
     @Test
     void should_return_not_such_data_when_delete_employee_given_wrong_id() {
         //given
@@ -51,5 +53,18 @@ public class NotSuchDataExceptionTest {
 
         //then
         assertEquals(IllegalOperationException.class,exception.getClass());
+    }
+
+    @Test
+    void should_return_not_such_data_when_delete_company_given_wrong_id() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        Throwable exception = assertThrows(IllegalOperationException.class,
+                () -> companyService.deleteCompanyById(1));
+
+        //then
+        assertEquals(IllegalOperationException.class, exception.getClass());
     }
 }
