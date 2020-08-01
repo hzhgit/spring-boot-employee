@@ -33,15 +33,15 @@ public class EmployeeIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    private final Company testCompany = new Company( 1,"OOCL", 6, Collections.emptyList());
+    private final Company testCompany = new Company(1, "OOCL", 6, Collections.emptyList());
 
     private final List<Employee> testEmployees = Arrays.asList(
-            new Employee(1,"zach", 21, "male", 5000, 1),
-            new Employee(2,"york", 22, "female", 6000, 1),
-            new Employee(3,"alex", 23, "female", 7000, 1),
-            new Employee(4,"green", 24, "male", 8000, 1),
-            new Employee(5,"karen", 25, "male", 9000, 1),
-            new Employee(6,"chris", 26, "male", 9000, 1)
+            new Employee(1, "zach", 21, "male", 5000, 1),
+            new Employee(2, "york", 22, "female", 6000, 1),
+            new Employee(3, "alex", 23, "female", 7000, 1),
+            new Employee(4, "green", 24, "male", 8000, 1),
+            new Employee(5, "karen", 25, "male", 9000, 1),
+            new Employee(6, "chris", 26, "male", 9000, 1)
     );
 
     @BeforeEach
@@ -83,7 +83,7 @@ public class EmployeeIntegrationTest {
         //when
         mockMvc.perform(get("/employees?page=" + page + "&pageSize=" + pageSize))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content",hasSize(pageSize)))
+                .andExpect(jsonPath("$.content", hasSize(pageSize)))
                 .andExpect(jsonPath("$.totalPages").value(2))
                 .andExpect(jsonPath("$.totalElements").value(6));
     }
@@ -123,26 +123,23 @@ public class EmployeeIntegrationTest {
     @Test
     void should_create_employee_when_hit_add_employee_given_employee() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        Company savedCompany = companyRepository.save(company);
         String employeeInfo = "{\n" +
-                "                \"id\": 1,\n" +
-                "                \"name\": \"ShaoLi\",\n" +
+                "                \"id\": 2,\n" +
+                "                \"name\": \"hzh\",\n" +
                 "                \"age\": 22,\n" +
                 "                \"gender\": \"male\",\n" +
-                "                \"salary\": 5000,\n" +
+                "                \"salary\": 3000,\n" +
                 "                \"companyId\": 1\n" +
                 "            }";
         //when
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeInfo))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("ShaoLi"))
+                .andExpect(jsonPath("$.name").value("hzh"))
                 .andExpect(jsonPath("$.age").value(22))
                 .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(5000))
+                .andExpect(jsonPath("$.salary").value(3000))
                 .andExpect(jsonPath("$.companyId").value(1));
-
     }
 
     @Test
