@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
@@ -43,12 +45,14 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public EmployeeResponse addEmployee(@RequestBody Employee employee) {
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        Employee employee = EmployeeMapper.convertEmployeeRequestToEntity(employeeRequest);
         return service.addEmployee(employee);
     }
 
     @PutMapping("/{employeeId}")
-    public EmployeeResponse modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) throws NotSuchDataException, IllegalOperationException {
+    public EmployeeResponse modifyEmployee(@RequestBody EmployeeRequest modifiedEmployeeRequest, @PathVariable Integer employeeId) throws NotSuchDataException, IllegalOperationException {
+        Employee modifiedEmployee = EmployeeMapper.convertEmployeeRequestToEntity(modifiedEmployeeRequest);
         return service.updateEmployee(employeeId, modifiedEmployee);
     }
 
