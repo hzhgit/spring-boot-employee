@@ -3,7 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -131,7 +131,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_companyId_is_1() throws NotSuchDataException, IllegalOperationException {
+    void should_return_updated_company_when_update_company_given_companyId_is_1() throws NoSuchDataException, IllegalOperationException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
@@ -156,7 +156,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_deleted_company_when_delete_company_given_company_id_is_1() throws NotSuchDataException {
+    void should_return_deleted_company_when_delete_company_given_company_id_is_1() throws NoSuchDataException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(

@@ -4,7 +4,7 @@ import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -51,14 +51,14 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public EmployeeResponse modifyEmployee(@RequestBody EmployeeRequest modifiedEmployeeRequest, @PathVariable Integer employeeId) throws NotSuchDataException, IllegalOperationException {
+    public EmployeeResponse modifyEmployee(@RequestBody EmployeeRequest modifiedEmployeeRequest, @PathVariable Integer employeeId) throws NoSuchDataException, IllegalOperationException {
         Employee modifiedEmployee = EmployeeMapper.convertEmployeeRequestToEntity(modifiedEmployeeRequest);
         return service.updateEmployee(employeeId, modifiedEmployee);
     }
 
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public EmployeeResponse deleteEmployee(@PathVariable Integer employeeId) throws NotSuchDataException {
+    public EmployeeResponse deleteEmployee(@PathVariable Integer employeeId) throws NoSuchDataException {
         return service.deleteEmployee(employeeId);
     }
 

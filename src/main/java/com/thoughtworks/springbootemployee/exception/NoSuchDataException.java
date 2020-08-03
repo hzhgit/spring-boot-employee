@@ -1,5 +1,5 @@
 package com.thoughtworks.springbootemployee.exception;
 
-public class NotSuchDataException extends Exception {
+public class NoSuchDataException extends Exception {
 
 }

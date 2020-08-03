@@ -2,7 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NotSuchDataException, IllegalOperationException {
+    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NoSuchDataException, IllegalOperationException {
         //given
         int employeeId = 1;
         Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200);
@@ -89,7 +89,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_deleted_employee_when_delete_given_id() throws NotSuchDataException {
+    void should_return_deleted_employee_when_delete_given_id() throws NoSuchDataException {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id)).willReturn(

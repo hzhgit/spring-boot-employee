@@ -19,11 +19,11 @@ public class customExceptionTest {
         EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         //when
-        Throwable exception = assertThrows(NotSuchDataException.class,
+        Throwable exception = assertThrows(NoSuchDataException.class,
                 () -> employeeService.deleteEmployee(1));
 
         //then
-        assertEquals(NotSuchDataException.class, exception.getClass());
+        assertEquals(NoSuchDataException.class, exception.getClass());
     }
 
     @Test
@@ -34,10 +34,10 @@ public class customExceptionTest {
         Employee employee = new Employee();
         employee.setId(1);
         //when
-        Throwable exception = assertThrows(NotSuchDataException.class,
+        Throwable exception = assertThrows(NoSuchDataException.class,
                 () -> employeeService.updateEmployee(1, employee));
         //then
-        assertEquals(NotSuchDataException.class, exception.getClass());
+        assertEquals(NoSuchDataException.class, exception.getClass());
     }
 
     @Test
@@ -62,11 +62,11 @@ public class customExceptionTest {
         CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
         //when
-        Throwable exception = assertThrows(NotSuchDataException.class,
+        Throwable exception = assertThrows(NoSuchDataException.class,
                 () -> companyService.deleteCompanyById(1));
 
         //then
-        assertEquals(NotSuchDataException.class, exception.getClass());
+        assertEquals(NoSuchDataException.class, exception.getClass());
     }
 
     @Test
@@ -77,10 +77,10 @@ public class customExceptionTest {
         Company company = new Company();
         company.setId(1);
         //when
-        Throwable exception = assertThrows(NotSuchDataException.class,
+        Throwable exception = assertThrows(NoSuchDataException.class,
                 () -> companyService.updateCompany(1, company));
         //then
-        assertEquals(NotSuchDataException.class, exception.getClass());
+        assertEquals(NoSuchDataException.class, exception.getClass());
     }
 
     @Test

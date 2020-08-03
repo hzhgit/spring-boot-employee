@@ -3,7 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
@@ -41,8 +41,7 @@ public class EmployeeService {
         return EmployeeMapper.convertEntityToEmployeeResponse(returnEmployee);
     }
 
-    public EmployeeResponse updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException, IllegalOperationException {
-        //todo employeeId
+    public EmployeeResponse updateEmployee(Integer employeeId, Employee employee) throws NoSuchDataException, IllegalOperationException {
         if(!employeeId.equals(employee.getId())){
             throw new IllegalOperationException();
         }
@@ -55,18 +54,17 @@ public class EmployeeService {
             updatedEmployee.setSalary(employee.getSalary());
             updatedEmployee = employeeRepository.save(updatedEmployee);
         }else {
-            //todo nosuch
-            throw new NotSuchDataException();
+            throw new NoSuchDataException();
         }
         return EmployeeMapper.convertEntityToEmployeeResponse(updatedEmployee);
     }
 
-    public EmployeeResponse deleteEmployee(Integer id) throws NotSuchDataException {
+    public EmployeeResponse deleteEmployee(Integer id) throws NoSuchDataException {
         Employee deletedEmployee = employeeRepository.findById(id).orElse(null);
         if (deletedEmployee != null) {
             employeeRepository.delete(deletedEmployee);
         }else {
-            throw new NotSuchDataException();
+            throw new NoSuchDataException();
         }
         return EmployeeMapper.convertEntityToEmployeeResponse(deletedEmployee);
     }

@@ -5,7 +5,7 @@ import com.thoughtworks.springbootemployee.Mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -62,7 +62,7 @@ public class CompanyService {
         return companyResponse = CompanyMapper.convertCompanyToCompanyResponse(company);
     }
 
-    public CompanyResponse updateCompany(Integer companyID, Company company) throws NotSuchDataException, IllegalOperationException {
+    public CompanyResponse updateCompany(Integer companyID, Company company) throws NoSuchDataException, IllegalOperationException {
         if (companyID != company.getId()) {
             throw new IllegalOperationException();
         }
@@ -73,17 +73,17 @@ public class CompanyService {
             fetchedCompany.setEmployeesNumber(company.getEmployeesNumber());
             fetchedCompany = companyRepository.save(company);
         } else {
-            throw new NotSuchDataException();
+            throw new NoSuchDataException();
         }
         return CompanyMapper.convertCompanyToCompanyResponse(fetchedCompany);
     }
 
-    public CompanyResponse deleteCompanyById(Integer companyId) throws NotSuchDataException {
+    public CompanyResponse deleteCompanyById(Integer companyId) throws NoSuchDataException {
         Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
         if (fetchedCompany != null) {
             companyRepository.delete(fetchedCompany);
         } else {
-            throw new NotSuchDataException();
+            throw new NoSuchDataException();
         }
         return CompanyMapper.convertCompanyToCompanyResponse(fetchedCompany);
     }
