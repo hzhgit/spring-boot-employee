@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotSuchDataException.class)
+    //todo return json
     String handleNotSuchDataException() {
         return NOT_SUCH_DATA;
     }

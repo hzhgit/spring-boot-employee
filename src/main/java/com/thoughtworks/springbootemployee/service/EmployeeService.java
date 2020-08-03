@@ -32,19 +32,18 @@ public class EmployeeService {
     }
 
     public EmployeeResponse getEmployeeById(Integer id) {
-        EmployeeResponse employeeResponse = new EmployeeResponse();
         Employee employee = employeeRepository.findById(id).orElse(null);
-        return employeeResponse = EmployeeMapper.convertEntityToEmployeeResponse(employee);
+        return EmployeeMapper.convertEntityToEmployeeResponse(employee);
     }
 
     public EmployeeResponse addEmployee(Employee employee) {
-        EmployeeResponse employeeResponse = new EmployeeResponse();
         Employee returnEmployee = employeeRepository.save(employee);
-        return employeeResponse =  EmployeeMapper.convertEntityToEmployeeResponse(returnEmployee);
+        return EmployeeMapper.convertEntityToEmployeeResponse(returnEmployee);
     }
 
     public EmployeeResponse updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException, IllegalOperationException {
-        if(employee.getId() != employeeId){
+        //todo employeeId
+        if(!employeeId.equals(employee.getId())){
             throw new IllegalOperationException();
         }
         Employee updatedEmployee = employeeRepository.findById(employeeId).orElse(null);
@@ -56,6 +55,7 @@ public class EmployeeService {
             updatedEmployee.setSalary(employee.getSalary());
             updatedEmployee = employeeRepository.save(updatedEmployee);
         }else {
+            //todo nosuch
             throw new NotSuchDataException();
         }
         return EmployeeMapper.convertEntityToEmployeeResponse(updatedEmployee);
@@ -70,7 +70,7 @@ public class EmployeeService {
         }
         return EmployeeMapper.convertEntityToEmployeeResponse(deletedEmployee);
     }
-
+    //todo convert response
     public Page<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
         return employeeRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
