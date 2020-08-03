@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -174,5 +174,48 @@ public class CompanyServiceTest {
         //then
         assertNotNull(deletedCompany);
         assertEquals(company.getId(), deletedCompany.getId());
+    }
+
+    @Test
+    void should_return_not_such_data_when_delete_company_given_wrong_id() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        Throwable exception = assertThrows(NoSuchDataException.class,
+                () -> companyService.deleteCompanyById(1));
+
+        //then
+        assertEquals(NoSuchDataException.class, exception.getClass());
+    }
+
+    @Test
+    void should_return_not_such_data_when_updat_company_given_id_not_exists() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        Company company = new Company();
+        company.setId(1);
+        //when
+        Throwable exception = assertThrows(NoSuchDataException.class,
+                () -> companyService.updateCompany(1, company));
+        //then
+        assertEquals(NoSuchDataException.class, exception.getClass());
+    }
+
+    @Test
+    void should_return_illegal_operation_exception_when_update_company_given_id_not_equals_updated_employee_id() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        int id = 1;
+        Company company = new Company(2,"OOCL",0,null);
+
+        //when
+        Throwable exception = assertThrows(IllegalOperationException.class,
+                () -> companyService.updateCompany(1, company));
+
+        //then
+        assertEquals(IllegalOperationException.class,exception.getClass());
     }
 }
